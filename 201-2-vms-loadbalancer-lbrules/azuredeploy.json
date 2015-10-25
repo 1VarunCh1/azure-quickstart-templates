@@ -93,6 +93,8 @@
   "variables": {
     "storageAccountType": "Standard_LRS",
     "availabilitySetName": "myAvSet",
+    "nsgName": "myNsg",
+    "nsgID": "[resourceId('Microsoft.Network/networkSecurityGroups',variables('nsgName'))]",
     "addressPrefix": "10.0.0.0/16",
     "subnetName": "Subnet-1",
     "subnetPrefix": "10.0.0.0/24",
@@ -126,7 +128,7 @@
     {
       "apiVersion": "2015-05-01-preview",
       "type": "Microsoft.Network/networkSecurityGroups",
-      "name": "myNSG",
+      "name": "[variables('nsgName')]",
       "location": "[resourceGroup().location]",
       "properties": {
         "securityRules": [
@@ -175,7 +177,7 @@
             "properties": {
               "addressPrefix": "[variables('subnetPrefix')]",
               "networkSecurityGroup": {
-                "id": "[resourceId('Microsoft.Network/networkSecurityGroups', 'myNSG')]"
+                "id": "[variables('nsgID')]"
               }
             }
           }
